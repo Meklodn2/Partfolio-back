@@ -35,16 +35,14 @@
     <div class="container">
         <div class="d-flex justify-content-between px-5 px-md-0 flex-wrap">
             <span class="page_title">Recent posts</span>
-            <a href="#" class="view">View all</a>
+            <a href="{% url 'blog' %}" class="view">View all</a>
         </div>
         <div class="row mt-3 row-gap-3">
             {% for post in posts %}
             <div class="col-12 col-md-6">
-                <a href="blog_detail.html " class="text-decoration-none text-black">
-                    <div class="my_card d-flex flex-column gap-3">
-                        <a href="{% url 'blog' %}" class="text-decoration-none">
-                            <h2 class="blog_title">{{ post.title }}</h2>
-                        </a>
+                <a href="{% url 'blog' %}" class="text-decoration-none text-black">
+                    <div class="my_card d-flex flex-column gap-3" style="min-height: 240px;">
+                        <h2 class="blog_title">{{ post.title }}</h2>
                         <div class="d-flex gap-3" class="date_title">
                             <span class="blog_date">{{ post.date_posted|date:"j M Y"}}</span>
                             <span class="blog_date">|</span>
@@ -56,28 +54,12 @@
                     </div>
                 </a>
             </div>
-            <div class="col-12 col-md-6">
-                <a href="blog_detail.html " class="text-decoration-none text-black">
-                    <div class="my_card d-flex flex-column gap-3">
-                        <a href="{% url 'blog' %}" class="text-decoration-none">
-                            <h2 class="blog_title">{{ post.title }}</h2>
-                        </a>
-                        <div class="d-flex gap-3" class="date_title">
-                            <span class="blog_date">{{ post.date_posted|date:"j M Y"}}</span>
-                            <span class="blog_date">|</span>
-                            <span class="tags">{% for tag in post.tags.all %}{{ tag.name|capfirst }}{% if notforloop.last%},{%endif%} {% endfor %}</span>
-                        </div>
-                        <p class="my_text">
-                            {{post.content|safe|striptags|truncatewords:26}}
-                        </p>
-                    </div>
-                </a>
-            </div>
+        
             {% endfor %}
         </div>
     </div>
 </div>
-<!-- ################### Recent Post Section End ################### -->
+<!-- ################### Recent Post Section End ################### --> 
 
 
 
