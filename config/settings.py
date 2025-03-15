@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'works',
     'users',
     'tags',
+    
 
 
     'ckeditor',

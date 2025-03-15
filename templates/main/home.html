@@ -1,32 +1,28 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 {% load static %}
 
-
-{% block title %} Home {% endblock %}
+{% block title %}
+Home
+{% endblock %}
 {% block content %}
-
 <div class="container py-3 py-md-5 px-5 px-md-0">
     <div class="row py-0 py-md-5 align-items-center flex-md-row flex-column-reverse">
         <div class="col-12 col-md-6">
             <div class="d-flex flex-column gap-3 text-center text-md-start">
                 <h1 class="home_title">Hi, I am John, Creative Technologist</h1>
-                <p class="my_text">
-                    Amet minim mollit non deserunt ullamco est sit aliqua dolor do
-                    amet sint. Velit officia consequat duis enim velit mollit.
-                    Exercitation veniam consequat sunt nostrud amet.
-                </p>
+                <p class="my_text">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit
+                    officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</p>
                 <div>
                     <a href="#" class="btn btn_cs">Download Resume</a>
                 </div>
             </div>
         </div>
         <div class="col-12 col-md-6 d-flex justify-content-center align-items-center">
-            <img src="{% static 'main/img/react-native-programmer-illustration-download-in-svg-png-gif-file-formats--logo-api-code-javascript-pack-design-development-illustrations-6109661.webp'%}"
+            <img src="{% static 'main/img/react-native-programmer-illustration-download-in-svg-png-gif-file-formats--logo-api-code-javascript-pack-design-development-illustrations-6109661.webp' %}"
                 alt="coding illustration" class="home_img" />
         </div>
     </div>
 </div>
-
 
 <!-- ################### Home Section End ################### -->
 
@@ -44,117 +40,66 @@
                     <div class="my_card d-flex flex-column gap-3" style="min-height: 240px;">
                         <h2 class="blog_title">{{ post.title }}</h2>
                         <div class="d-flex gap-3" class="date_title">
-                            <span class="blog_date">{{ post.date_posted|date:"j M Y"}}</span>
+                            <span class="blog_date">{{ post.date_posted|date:'j M Y' }}</span>
                             <span class="blog_date">|</span>
-                            <span class="tags">{% for tag in post.tags.all %}{{ tag.name|capfirst }}{% if notforloop.last%},{%endif%} {% endfor %}</span>
+                            <span class="tags">
+                                {% for tag in post.tags.all %}
+                                {{ tag.name|capfirst }}{% if notforloop.last %},{% endif %}
+                                {% endfor %}
+                            </span>
                         </div>
-                        <p class="my_text">
-                            {{post.content|safe|striptags|truncatewords:26}}
-                        </p>
+                        <p class="my_text">{{ post.content|safe|striptags|truncatewords:26 }}</p>
                     </div>
                 </a>
             </div>
-        
             {% endfor %}
         </div>
     </div>
 </div>
-<!-- ################### Recent Post Section End ################### --> 
-
-
+<!-- ################### Recent Post Section End ################### -->
 
 <!-- ################### Featured Post Section Begin ################### -->
 <div class="container py-5">
     <div class="d-flex justify-content-between px-5 px-md-0 flex-wrap">
         <span class="page_title">Featured works</span>
-        <a href="#" class="view">View all</a>
+        <a href="{% url 'works' %}" class="view">View all</a>
     </div>
 
     <div class="cards mt-3 px-5 px-md-0 row-gap-3">
+        {% for work in works %}
         <div class="card mb-3 border-0 rounded-0"
             style="border-bottom: 1px solid #E0E0E0 !important; padding-bottom: 20px;">
             <div class="row g-0">
                 <div class="col-md-3 d-flex justify-content-center align-items-center">
-                    <a href="work_detail.html" class="w-100">
-                        <img src="{% static 'main/img/work1.jpg' %}" class="img-fluid rounded-start" alt="work 1"
-                            style="width: 100%; height: auto; border-radius: 6px;">
-                    </a>
+                    <a href="{% url 'work-detail' pk=work.pk %}" class="w-100"><img src="{{ work.work_image.url }}"
+                            class="img-fluid rounded-start" alt="work 1"
+                            style="width: 100%; height: auto; border-radius: 6px;" /></a>
                 </div>
                 <div class="col-md-9">
                     <div
                         class="card-body d-flex flex-column justify-content-between h-100 row-gap-4 row-gap-md-0 pt-4 pt-md-3 ps-0 ps-md-3">
                         <div>
-                            <a href="work_detail.html" class="text-decoration-none">
-                                <h5 class="card-title works_title">Designing Dashboards</h5>
+                            <a href="{% url 'work-detail' pk=work.pk %}" class="text-decoration-none">
+                                <h5 class="card-title works_title">{{ work.title }}</h5>
                             </a>
                             <div class="d-flex gap-3 mt-4">
-                                <span class="year">2020</span>
-                                <span class="tags">Dashboard</span>
+                                <span class="year">{{ work.date_posted|date:'Y' }}</span>
+                                <span class="tags">
+                                    {% for tag in work.tags.all %}
+                                    {{ tag|capfirst }}{% if not forloop.last %},{% endif %}
+                                    {% endfor %}
+                                </span>
                             </div>
                         </div>
-                        <p class="card-text my_text">Amet minim mollit non deserunt ullamco est sit aliqua dolor do
-                            amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat
-                            sunt nostrud amet.</p>
+                        <p class="card-text my_text">{{ work.content|safe|striptags|truncatewords:30 }}</p>
                     </div>
                 </div>
             </div>
         </div>
-
-        <div class="card mb-3 border-0 rounded-0"
-            style="border-bottom: 1px solid #E0E0E0 !important; padding-bottom: 20px;">
-            <div class="row g-0">
-                <div class="col-md-3 d-flex justify-content-center align-items-center">
-                    <img src="{% static 'main/img/Work2.jpg' %}" class="img-fluid rounded-start" alt="work 1"
-                        style="width: 100%; height: auto; border-radius: 6px;">
-                </div>
-                <div class="col-md-9">
-                    <div
-                        class="card-body d-flex flex-column justify-content-between h-100 row-gap-4 row-gap-md-0 pt-4 pt-md-3 ps-0 ps-md-3">
-                        <div>
-                            <a href="work_detail.html" class="text-decoration-none">
-                                <h5 class="card-title works_title">Vibrant Portraits of 2020</h5>
-                            </a>
-                            <div class="d-flex gap-3 mt-4">
-                                <span class="year">2020</span>
-                                <span class="tags">Illustration</span>
-                            </div>
-                        </div>
-                        <p class="card-text my_text">Amet minim mollit non deserunt ullamco est sit aliqua dolor do
-                            amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat
-                            sunt nostrud amet.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="card mb-3 border-0 rounded-0"
-            style="border-bottom: 1px solid #E0E0E0 !important; padding-bottom: 20px;">
-            <div class="row g-0">
-                <div class="col-md-3 d-flex justify-content-center align-items-center">
-                    <img src="{% static 'main/img/work3.jpg' %}" class="img-fluid rounded-start" alt="work 1"
-                        style="width: 100%; height: auto; border-radius: 6px;">
-                </div>
-                <div class="col-md-9">
-                    <div
-                        class="card-body d-flex flex-column justify-content-between h-100 row-gap-4 row-gap-md-0 pt-4 pt-md-3 ps-0 ps-md-3">
-                        <div>
-                            <a href="work_detail.html" class="text-decoration-none">
-                                <h5 class="card-title works_title">36 Days of Malayalam type</h5>
-                            </a>
-                            <div class="d-flex gap-3 mt-4">
-                                <span class="year">2020</span>
-                                <span class="tags">Typography</span>
-                            </div>
-                        </div>
-                        <p class="card-text my_text">Amet minim mollit non deserunt ullamco est sit aliqua dolor do
-                            amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat
-                            sunt nostrud amet.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+        {% empty %}
+        <p>Wors no yet</p>
+        {% endfor %}
     </div>
 </div>
 <!-- ################### Featured Post Section End ################### -->
-
 {% endblock %}

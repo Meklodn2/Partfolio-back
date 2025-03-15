@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block title %}
+Works
+{% endblock %}
+
+{% block content %}
+<!-- ################### Featured Post Section Begin ################### -->
+<div class="container py-5">
+    <div class="d-flex justify-content-between px-5 px-md-0 flex-wrap">
+        <h1 class="fwork_title">Works</h1>
+    </div>
+
+    <div class="cards mt-3 px-5 px-md-0 row-gap-3">
+        
+        {% for work in works %}
+        <div class="card mb-3 border-0 rounded-0"style="border-bottom: 1px solid #E0E0E0 !important; padding-bottom: 20px;">
+            <div class="row g-0">
+                <div class="col-md-3 d-flex justify-content-center align-items-center">
+                    <a href="{% url 'work-detail' pk=work.pk %}" class="w-100"><img src="{{ work.work_image.url }}"
+                            class="img-fluid rounded-start" alt="work 1"
+                            style="width: 100%; height: auto; border-radius: 6px;" /></a>
+                </div>
+                <div class="col-md-9">
+                    <div
+                        class="card-body d-flex flex-column justify-content-between h-100 row-gap-4 row-gap-md-0 pt-4 pt-md-3 ps-0 ps-md-3">
+                        <div>
+                            <a href="{% url 'work-detail' pk=work.pk %}" class="text-decoration-none">
+                                <h5 class="card-title works_title">{{work.title}}</h5>
+                            </a>
+                            <div class="d-flex gap-3 mt-4">
+                            <span class="year">{{ work.date_posted|date:"Y"}}</span>
+                            <span class="tags">{% for tag in work.tags.all %}{{ tag|capfirst }}{% if not forloop.last%},{%endif%} {% endfor %}</span>
+                            </div>
+                        </div>
+                        <p class="card-text my_text">{{work.content|safe|striptags|truncatewords:30}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+      {% empty %}
+        <p>Wors no yet</p>
+
+        {% endfor %}
+
+    </div>
+</div>
+<!-- ################### Featured Post Section End ################### -->
+{% endblock %}
