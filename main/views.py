@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
 from blog.models import Post
-from works.models import Works
+from works.models import Work
 
 # Create your views here.
 
