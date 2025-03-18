@@ -35,7 +35,7 @@ class PostDetailView(DetailView):
 
         if form.is_valid():
             comment = form.save(commit=False)
-            comment.post = self.object # commentga postni bog'lash
+            comment.blog = self.object # commentga postni bog'lash
             comment.user = request.user # commentga foydalanuvchini bog'lash
             comment.save()
             return redirect('blog-detail', pk=self.object.pk) #postga qaytish
