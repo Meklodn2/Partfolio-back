@@ -12,7 +12,7 @@ class Post(models.Model):
     tags = models.ManyToManyField('tags.Tag', related_name='posts')
 
     class Meta:
-        ordering = [ '-date_posted']
+        ordering = ['-date_posted']
         verbose_name ='Post'
         verbose_name_plural = 'Posts'
 
@@ -20,8 +20,8 @@ class Post(models.Model):
         return self.title
     
 class Comment(models.Model):
-    blog = models.ForeignKey(Post, related_name='commnets', on_delete=models.CASCADE)
-    user = models.ForeignKey(CustomUser, related_name='commnets', on_delete=models.CASCADE)
+    blog = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, related_name='comments', on_delete=models.CASCADE)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     
