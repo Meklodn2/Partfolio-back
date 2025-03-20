@@ -60,23 +60,29 @@
                 {% else %}
                 <p>Please <a href="{% url 'login' %}">log in</a> to leave a commnet</p>
                 {% endif %}
-                <hr>
+               
+               
+               
+                {% for comment in comments%}
+                {%empty%}
+                <p>No comments yet</p>
+            <hr>
                 <div class="d-flex flex-column gap-4">
                     <div class="profile d-flex gap-2 align-items-end">
                         <div class="d-flex gap-2 align-items-center">
                             <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
                                 alt="" width="32px" height="32px">
-                            <h5 class="profile_name m-0">John Doe</h5>
+                            <h5 class="profile_name m-0">{{ comment.user.first_name }}</h5>
                             <div class="text-secondary ms-3" style="font-size: 12px;">4 min ago</div>
                         </div>
                     </div>
-                    <p>I really appreciate the insights and perspective shared in this article. It's definitely
-                        given me
-                        something to think about and has helped me see things from a different angle. Thank you for
-                        writing and sharing!
+                    <p>
+                        {{ comment.content }}
                     </p>
                 </div>
-                <hr>
+               
+                <hr> 
+                {% endfor %}
             </div>
         </div>
     </div>
