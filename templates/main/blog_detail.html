@@ -39,19 +39,19 @@
                 <div class="comment-field d-flex flex-column gap-3">
 
                     <div class="profile d-flex gap-3 align-items-end">
-                        {% if user_profile.profile_image %}
-                        <img src="{{ user_profile.profile_image.url }}" alt="" class="rounded-circle" width="50"
-                            height="50" />
+                        {% if user.profile_image %}
+                        <img src="{{ user.profile_image.url }}" alt="" class="rounded-circle" width="32"
+                            height="32" />
                         {% else %}
                         <img src="https://www.freeiconspng.com/thumbs/profile-icon-png/profile-icon-9.png" alt=""
-                            class="rounded-circle" width="50" height="50" />
+                            class="rounded-circle" width="32" height="32" />
                         {% endif %}
                         <h4 class="profile_name m-0">{{ user.first_name }} {{ user.last_name }}</h4>
                     </div>
                     <form method="post">
                         {% csrf_token %}
                         <textarea name="content" class="comment_text" rows="5" cols="10" placeholder="Write your comment...">
-                    </textarea>
+                    </textarea max-length=100>
                         <div class="d-flex justify-content-end">
                             <button class="btn btn-sm btn_cs">Add Comment</button>
                         </div>
@@ -64,24 +64,30 @@
                
                
                 {% for comment in comments%}
-                {%empty%}
-                <p>No comments yet</p>
-            <hr>
+           
                 <div class="d-flex flex-column gap-4">
                     <div class="profile d-flex gap-2 align-items-end">
                         <div class="d-flex gap-2 align-items-center">
-                            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-                                alt="" width="32px" height="32px">
-                            <h5 class="profile_name m-0">{{ comment.user.first_name }}</h5>
-                            <div class="text-secondary ms-3" style="font-size: 12px;">4 min ago</div>
+                            {% if comment.user.profile_image %}
+                        <img src="{{ comment.user.profile_image.url }}" alt="" class="rounded-circle border border-black" width="32"
+                            height="32" />
+                        {% else %}
+                        <img src="https://www.freeiconspng.com/thumbs/profile-icon-png/profile-icon-9.png" alt=""
+                            class="rounded-circle border border-black" width="32" height="32" />
+                        {% endif %}
+                            
+                            <h5 class="profile_name m-0">{{ comment.user.first_name }} {{ comment.user.last_name }}</h5>
+                            <div class="text-secondary ms-3" style="font-size: 12px;">{{ comment.created_at|timesince }}</div>
                         </div>
                     </div>
                     <p>
                         {{ comment.content }}
                     </p>
                 </div>
-               
                 <hr> 
+                {%empty%}
+                <p>No comments yet</p>
+                
                 {% endfor %}
             </div>
         </div>
@@ -94,3 +100,7 @@
 
 
 {% endblock %}
+
+
+
+
